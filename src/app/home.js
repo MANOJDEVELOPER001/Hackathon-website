@@ -21,25 +21,28 @@ export default function Home() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-
+  
+    const templateParams = { ...formData }; // clone the current state
+  
+    setformData({
+      name: '',
+      number: '',
+      email: '',
+      subject: '',
+      message: ''
+    });
+  
     emailjs.send(
       'service_luwocrj',
       'template_ilsjgij',
-      formData,
+      templateParams,
       '4Vz7qDJTdeNwZ4HNj'
     )
-    .then((result) => {
-      console.log(result.text);
-      setformData({
-        name:'',
-        number:'',
-        email:'',
-        subject:'',
-        message:''
-      });
-    }, (error) => {
-      alert('Failed to send message.');
-      console.log(error.text);
+    .then((res) => {
+      console.log('Email sent successfully:', res);
+    })
+    .catch((err) => {
+      console.error('Email send failed:', err);
     });
   };
   const scrollToPartners=()=>{
